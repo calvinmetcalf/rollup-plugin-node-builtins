@@ -91,22 +91,22 @@ export function resolve() {
 // path.normalize(path)
 // posix version
 export function normalize(path) {
-  var isAbsolute = isAbsolute(path),
+  var isPathAbsolute = isAbsolute(path),
       trailingSlash = substr(path, -1) === '/';
 
   // Normalize the path
   path = normalizeArray(filter(path.split('/'), function(p) {
     return !!p;
-  }), !isAbsolute).join('/');
+  }), !isPathAbsolute).join('/');
 
-  if (!path && !isAbsolute) {
+  if (!path && !isPathAbsolute) {
     path = '.';
   }
   if (path && trailingSlash) {
     path += '/';
   }
 
-  return (isAbsolute ? '/' : '') + path;
+  return (isPathAbsolute ? '/' : '') + path;
 };
 
 // posix version
@@ -188,8 +188,7 @@ export function dirname(path) {
   }
 
   return root + dir;
-};
-
+}
 
 export function basename(path, ext) {
   var f = splitPath(path)[2];
@@ -226,9 +225,9 @@ function filter (xs, f) {
 }
 
 // String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
+var substr = 'ab'.substr(-1) === 'b' ?
+    function (str, start, len) { return str.substr(start, len) } :
+    function (str, start, len) {
         if (start < 0) start = str.length + start;
         return str.substr(start, len);
     }
