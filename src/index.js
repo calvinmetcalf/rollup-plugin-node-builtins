@@ -30,15 +30,31 @@ libs.set('zlib', require.resolve(join('..', 'src', 'es6', 'zlib')));
 libs.set('tty', require.resolve(join('..', 'src', 'es6', 'tty')));
 libs.set('domain', require.resolve(join('..', 'src', 'es6', 'domain')));
 
-// not shimmed
-//libs.set('crypto', );
 const CRYPTO_PATH = require.resolve('crypto-browserify');
+const FS_PATH = require.resolve('browserify-fs');
 const EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
+
+// not shimmed
+libs.set('dns', EMPTY_PATH);
+libs.set('dgram', EMPTY_PATH);
+libs.set('child_process', EMPTY_PATH);
+libs.set('cluster', EMPTY_PATH);
+libs.set('module', EMPTY_PATH);
+libs.set('net', EMPTY_PATH);
+libs.set('readline', EMPTY_PATH);
+libs.set('repl', EMPTY_PATH);
+libs.set('tls', EMPTY_PATH);
+
+
 export default function (opts) {
   opts = opts || {};
   let cryptoPath = EMPTY_PATH;
+  let fsPath = EMPTY_PATH;
   if (opts.crypto) {
     cryptoPath = CRYPTO_PATH;
+  }
+  if(opts.fs) {
+    fsPath = FS_PATH;
   }
   return {resolveId(importee) {
     if (importee && importee.slice(-1) === '/') {
@@ -49,6 +65,9 @@ export default function (opts) {
     }
     if (importee === 'crypto') {
       return cryptoPath;
+    }
+    if (importee === 'fs') {
+      return fsPath;
     }
   }};
 }
