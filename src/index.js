@@ -2,7 +2,6 @@ import {join} from 'path';
 const libs = new Map();
 
 // our es6 versions
-libs.set('process', require.resolve('process-es6'));
 libs.set('buffer', require.resolve('buffer-es6'));
 libs.set('util', require.resolve(join('..', 'src', 'es6', 'util')));
 libs.set('sys', libs.get('util'));
@@ -32,6 +31,7 @@ libs.set('domain', require.resolve(join('..', 'src', 'es6', 'domain')));
 
 const CRYPTO_PATH = require.resolve('crypto-browserify');
 const FS_PATH = require.resolve('browserify-fs');
+const PROCESS_PATH = require.resolve('process-es6');
 const EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
 
 // not shimmed
@@ -49,12 +49,16 @@ libs.set('tls', EMPTY_PATH);
 export default function (opts) {
   opts = opts || {};
   let cryptoPath = EMPTY_PATH;
+  let processPath = EMPTY_PATH;
   let fsPath = EMPTY_PATH;
   if (opts.crypto) {
     cryptoPath = CRYPTO_PATH;
   }
-  if(opts.fs) {
+  if (opts.fs) {
     fsPath = FS_PATH;
+  }
+  if(opts.process) {
+    processPath = PROCESS_PATH;
   }
   return {resolveId(importee) {
     if (importee && importee.slice(-1) === '/') {
@@ -68,6 +72,9 @@ export default function (opts) {
     }
     if (importee === 'fs') {
       return fsPath;
+    }
+    if (importee === 'process') {
+      return processPath;
     }
   }};
 }

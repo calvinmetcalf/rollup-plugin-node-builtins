@@ -3,7 +3,6 @@ import { join } from 'path';
 var libs = new Map();
 
 // our es6 versions
-libs.set('process', require.resolve('process-es6'));
 libs.set('buffer', require.resolve('buffer-es6'));
 libs.set('util', require.resolve(join('..', 'src', 'es6', 'util')));
 libs.set('sys', libs.get('util'));
@@ -33,6 +32,7 @@ libs.set('domain', require.resolve(join('..', 'src', 'es6', 'domain')));
 
 var CRYPTO_PATH = require.resolve('crypto-browserify');
 var FS_PATH = require.resolve('browserify-fs');
+var PROCESS_PATH = require.resolve('process-es6');
 var EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
 
 // not shimmed
@@ -49,12 +49,16 @@ libs.set('tls', EMPTY_PATH);
 function index (opts) {
   opts = opts || {};
   var cryptoPath = EMPTY_PATH;
+  var processPath = EMPTY_PATH;
   var fsPath = EMPTY_PATH;
   if (opts.crypto) {
     cryptoPath = CRYPTO_PATH;
   }
   if (opts.fs) {
     fsPath = FS_PATH;
+  }
+  if (opts.process) {
+    processPath = PROCESS_PATH;
   }
   return {
     resolveId: function resolveId(importee) {
@@ -69,6 +73,9 @@ function index (opts) {
       }
       if (importee === 'fs') {
         return fsPath;
+      }
+      if (importee === 'process') {
+        return processPath;
       }
     }
   };
