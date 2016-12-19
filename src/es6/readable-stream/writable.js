@@ -8,7 +8,7 @@ import {Buffer} from 'buffer';
 Writable.WritableState = WritableState;
 import {EventEmitter} from 'events';
 import {Duplex} from './duplex';
-import {nextTick} from 'process';
+import {nextTick} from 'process-es6';
 inherits(Writable, EventEmitter);
 
 function nop() {}
