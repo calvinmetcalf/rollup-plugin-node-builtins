@@ -29,7 +29,18 @@ The following modules include ES6 specific version which allow you to do named i
 - vm*§
 - zlib*
 - tty
-- domain
+- domain∆
+- dns∆
+- dgram∆
+- child_process∆
+- cluster∆
+- module∆
+- net∆
+- readline∆
+- repl∆
+- tls∆
+- fs˚
+- crypto˚
 
 \* requires [node-globals plugin](https://github.com/calvinmetcalf/rollup-plugin-node-globals)
 
@@ -39,7 +50,13 @@ The following modules include ES6 specific version which allow you to do named i
 
 § vm does not have all corner cases and has less of them in a web worker
 
+∆ not shimmed, just returns mock
+
+˚ optional, add option to enable browserified shim
+
 Crypto is not shimmed and and we just provide the commonjs one from browserify  and it will likely not work, if you really want it please pass `{crypto: true}` as an option.
+
+
 
 Not all included modules rollup equally, streams (and by extension anything that requires it like http) are a mess of circular references that are pretty much impossible to tree-shake out, similarly url methods are actually a shortcut to a url object so those methods don't tree shake out very well, punycode, path, querystring, events, util, and process tree shake very well especially if you do named imports.
 

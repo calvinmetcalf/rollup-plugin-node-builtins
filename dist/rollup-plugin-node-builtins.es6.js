@@ -1,5 +1,6 @@
-import {join} from 'path';
-const libs = new Map();
+import { join } from 'path';
+
+var libs = new Map();
 
 // our es6 versions
 libs.set('process', require.resolve('process-es6'));
@@ -30,9 +31,9 @@ libs.set('zlib', require.resolve(join('..', 'src', 'es6', 'zlib')));
 libs.set('tty', require.resolve(join('..', 'src', 'es6', 'tty')));
 libs.set('domain', require.resolve(join('..', 'src', 'es6', 'domain')));
 
-const CRYPTO_PATH = require.resolve('crypto-browserify');
-const FS_PATH = require.resolve('browserify-fs');
-const EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
+var CRYPTO_PATH = require.resolve('crypto-browserify');
+var FS_PATH = require.resolve('browserify-fs');
+var EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
 
 // not shimmed
 libs.set('dns', EMPTY_PATH);
@@ -45,29 +46,32 @@ libs.set('readline', EMPTY_PATH);
 libs.set('repl', EMPTY_PATH);
 libs.set('tls', EMPTY_PATH);
 
-
-export default function (opts) {
+function index (opts) {
   opts = opts || {};
-  let cryptoPath = EMPTY_PATH;
-  let fsPath = EMPTY_PATH;
+  var cryptoPath = EMPTY_PATH;
+  var fsPath = EMPTY_PATH;
   if (opts.crypto) {
     cryptoPath = CRYPTO_PATH;
   }
   if (opts.fs) {
     fsPath = FS_PATH;
   }
-  return {resolveId(importee) {
-    if (importee && importee.slice(-1) === '/') {
-      importee === importee.slice(0, -1);
+  return {
+    resolveId: function resolveId(importee) {
+      if (importee && importee.slice(-1) === '/') {
+        importee === importee.slice(0, -1);
+      }
+      if (libs.has(importee)) {
+        return libs.get(importee);
+      }
+      if (importee === 'crypto') {
+        return cryptoPath;
+      }
+      if (importee === 'fs') {
+        return fsPath;
+      }
     }
-    if (libs.has(importee)) {
-      return libs.get(importee);
-    }
-    if (importee === 'crypto') {
-      return cryptoPath;
-    }
-    if (importee === 'fs') {
-      return fsPath;
-    }
-  }};
+  };
 }
+
+export default index;

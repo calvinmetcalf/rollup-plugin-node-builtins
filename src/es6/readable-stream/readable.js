@@ -7,7 +7,7 @@ import {inherits, debuglog} from 'util';
 import BufferList from './buffer-list';
 import {StringDecoder} from 'string_decoder';
 import {Duplex} from './duplex';
-import {nextTick} from 'process';
+import {nextTick} from 'process-es6';
 
 var debug = debuglog('stream');
 inherits(Readable, EventEmitter);
