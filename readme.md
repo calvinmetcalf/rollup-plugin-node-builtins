@@ -12,11 +12,11 @@ The following modules include ES6 specific version which allow you to do named i
 - process*
 - events
 - stream*
-- util
+- util*
 - path
 - buffer*
 - querystring
-- url
+- url*
 - string_decoder*
 - punycode
 - http*†
@@ -29,7 +29,7 @@ The following modules include ES6 specific version which allow you to do named i
 - vm*§
 - zlib*
 - tty
-- domain∆
+- domain
 - dns∆
 - dgram∆
 - child_process∆

@@ -28,7 +28,7 @@ describe('rollup-plugin-node-builtins', function() {
           builtins()
         ]
       };
-      if (file === 'stream.js' || file === 'assert.js' || file === 'string-decoder.js' || file === 'zlib.js') {
+      if (file === 'url-parse.js' || file === 'domain.js' || file ===   'url-format.js' || file === 'stream.js' || file === 'assert.js' || file === 'string-decoder.js' || file === 'zlib.js') {
         config.plugins.push(globals());
       }
       rollup.rollup(config).then(function(bundle) {
