@@ -14,6 +14,10 @@ function EventEmitter() {
 export default EventEmitter;
 export {EventEmitter};
 
+// nodejs oddity
+// require('events') === require('events').EventEmitter
+EventEmitter.EventEmitter = EventEmitter
+
 EventEmitter.usingDomains = false;
 
 EventEmitter.prototype.domain = undefined;
