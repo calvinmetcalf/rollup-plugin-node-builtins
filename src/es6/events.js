@@ -262,6 +262,8 @@ EventEmitter.prototype.addListener = function addListener(type, listener) {
 
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
 EventEmitter.prototype.prependListener =
     function prependListener(type, listener) {
       return _addListener(this, type, listener, true);
