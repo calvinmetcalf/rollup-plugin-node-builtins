@@ -92,11 +92,6 @@ export function platform() {
 export function tmpDir() {
   return '/tmp';
 }
-
-export function arch() {
-  return 'amd64';
-}
-
 export var tmpdir = tmpDir;
 
 export var EOL = '\n';
