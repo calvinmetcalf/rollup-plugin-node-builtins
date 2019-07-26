@@ -96,6 +96,8 @@ export var tmpdir = tmpDir;
 
 export var EOL = '\n';
 export default {
+  arch:arch,
+  platform:platform,
   EOL: EOL,
   tmpdir: tmpdir,
   tmpDir: tmpDir,
