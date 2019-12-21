@@ -31,7 +31,7 @@ libs.set('tty', require.resolve(join('..', 'src', 'es6', 'tty')));
 libs.set('domain', require.resolve(join('..', 'src', 'es6', 'domain')));
 
 const CRYPTO_PATH = require.resolve('crypto-browserify');
-const FS_PATH = require.resolve('browserify-fs');
+const FS_PATH = require.resolve('browserfs/dist/shims/fs.js');
 const EMPTY_PATH = require.resolve(join('..', 'src', 'es6', 'empty'));
 
 // not shimmed

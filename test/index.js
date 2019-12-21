@@ -65,4 +65,18 @@ describe('rollup-plugin-node-builtins', function() {
       done();
     });
   });
-})
+  it('fs option works', function(done) {
+    var config = {
+      entry: 'test/examples/fs.js',
+      plugins: [
+        builtins({ fs: true }),
+      ],
+    };
+    rollup.rollup(config).then(function() {
+      done();
+    }, function(err) {
+      debug(err);
+      done();
+    });
+  });
+});
